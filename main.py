@@ -1,41 +1,40 @@
-# Import the pygame library to create the game and handle its graphical and interactive components
 import pygame
-
-# Import constants defined in a separate module for cleaner and reusable code
 from constants import *
 
-# Main function to initialize and run the game
 def main():
-    # Initialize all the pygame modules
+    # Initialize all pygame modules
     pygame.init()
 
-    # Create a clock object to control the frame rate of the game
+    # Create a clock object to manage frame timing
     clock = pygame.time.Clock()
 
-    # Log game initialization details to the console
+    # Set up the game window and set its title
+    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    pygame.display.set_caption("Asteroids Game")
+
+    # Log game initialization details
     print("Starting asteroids!")
     print(f"Screen width: {SCREEN_WIDTH}")
     print(f"Screen height: {SCREEN_HEIGHT}")
 
-    # Set up the display window with the specified dimensions from constants
-    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-
-    # Main game loop that runs continuously until the game is quit
-    while True:
-        # Handle events such as quitting the game
+    # Main game loop
+    running = True
+    while running:
+        # Handle events
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:  # Check if the Quit event is triggered
-                return  # Exit the main function and end the game
+            if event.type == pygame.QUIT:
+                running = False  # Exit the game loop
 
-        # Fill the screen with a black background for each frame
+        # Clear the screen and update the display
         screen.fill("black")
-        
-        # Update the display to reflect any changes
         pygame.display.flip()
 
-        # Limit the game to run at 60 frames per second
+        # Maintain frame rate at 60 FPS
         clock.tick(60)
 
-# Check if the script is being run directly and start the game
+    # Quit pygame gracefully
+    pygame.quit()
+
+# Start the game only if the script is run directly
 if __name__ == "__main__":
     main()
