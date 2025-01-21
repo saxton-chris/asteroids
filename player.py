@@ -52,7 +52,7 @@ class Player(CircleShape):
         tri_points = self.triangle()
         pygame.draw.polygon(surface=screen, color=color, width=width, points=tri_points)
 
-    def rotate(self, dt):
+    def rotate(self, dt: float):
         """
         Rotates the player based on the given delta time.
 
@@ -64,7 +64,7 @@ class Player(CircleShape):
 
     def update(self, dt):
         """
-        Updates the player's state, including handling input for rotation.
+        Updates the player's state, including handling input for rotation and movement.
 
         :param dt: Delta time (time elapsed since the last frame, in seconds).
                 This is used to calculate frame-independent player actions.
@@ -78,3 +78,22 @@ class Player(CircleShape):
         # Rotate clockwise when the 'D' key is pressed
         if keys[pygame.K_d]:
             self.rotate(dt)  # Pass positive dt for clockwise rotation
+
+        # Move forward when the 'W' key is pressed
+        if keys[pygame.K_w]:
+            self.move(-dt)  # Pass negative dt for forward movement
+
+        # Move backward when the 'S' key is pressed
+        if keys[pygame.K_s]:
+            self.move(dt)  # Pass positive dt for backward movement
+
+
+    def move(self, dt):
+        """
+        Moves the player in the direction it is currently facing.
+
+        :param dt: Delta time (time elapsed since the last frame, in seconds).
+                This ensures the movement speed is frame-rate independent.
+        """
+        forward = pygame.Vector2(0, 1).rotate(self.rotation)  # Calculate forward direction based on rotation
+        self.position += forward * PLAYER_SPEED * dt  # Update position based on speed and delta time

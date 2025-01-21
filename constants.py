@@ -10,4 +10,5 @@ ASTEROID_MAX_RADIUS = ASTEROID_MIN_RADIUS * ASTEROID_KINDS  # Maximum radius of 
 
 # Player-related constants
 PLAYER_RADIUS = 20  # Radius of the player character in pixels
-PLAYER_TURN_SPEED = 300 #Speed at which the player turns
+PLAYER_TURN_SPEED = 300 # Speed at which the player turns
+PLAYER_SPEED = 200 # Speed the player moves at
