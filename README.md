@@ -19,7 +19,7 @@ For this project, a `requirements.txt` file is included that has the proper vers
 
 The first step in building this project was to just build a boilerplate main.py file to begin running the program and have a base to build upon. It was just a simple piece of code importing `pygame` and writing a main function to output **Starting Asteroids!** Below is the code that as generated for this step.
 
-```
+```python
 import pygame
 
 def main():
