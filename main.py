@@ -16,7 +16,7 @@ def main():
     x = SCREEN_WIDTH / 2
     y = SCREEN_HEIGHT / 2
 
-    ast_player = Player(x, y, containers=screen)
+    ast_player = Player(x, y)
 
     # Main game loop
     running = True
