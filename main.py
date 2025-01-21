@@ -1,5 +1,6 @@
 import pygame
 from constants import *
+from player import Player
 
 def main():
     # Initialize all pygame modules
@@ -12,10 +13,10 @@ def main():
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption("Asteroids Game")
 
-    # Log game initialization details
-    print("Starting asteroids!")
-    print(f"Screen width: {SCREEN_WIDTH}")
-    print(f"Screen height: {SCREEN_HEIGHT}")
+    x = SCREEN_WIDTH / 2
+    y = SCREEN_HEIGHT / 2
+
+    ast_player = Player(x, y, containers=screen)
 
     # Main game loop
     running = True
@@ -27,6 +28,7 @@ def main():
 
         # Clear the screen and update the display
         screen.fill("black")
+        ast_player.draw(screen)
         pygame.display.flip()
 
         # Maintain frame rate at 60 FPS
