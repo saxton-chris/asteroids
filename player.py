@@ -62,38 +62,37 @@ class Player(CircleShape):
         self.rotation += PLAYER_TURN_SPEED * dt
 
 
-    def update(self, dt):
+    def update(self, dt: float):
         """
         Updates the player's state, including handling input for rotation and movement.
 
         :param dt: Delta time (time elapsed since the last frame, in seconds).
-                This is used to calculate frame-independent player actions.
+                This ensures frame-independent player actions.
         """
         keys = pygame.key.get_pressed()  # Get the current state of all keyboard keys
 
-        # Rotate counterclockwise when the 'A' key is pressed
-        if keys[pygame.K_a]:
-            self.rotate(-dt)  # Pass negative dt for counterclockwise rotation
+        # Handle rotation
+        if keys[pygame.K_a]:  # Rotate counterclockwise
+            self.rotate(-dt)
+        if keys[pygame.K_d]:  # Rotate clockwise
+            self.rotate(dt)
 
-        # Rotate clockwise when the 'D' key is pressed
-        if keys[pygame.K_d]:
-            self.rotate(dt)  # Pass positive dt for clockwise rotation
-
-        # Move forward when the 'W' key is pressed
-        if keys[pygame.K_w]:
-            self.move(-dt)  # Pass negative dt for forward movement
-
-        # Move backward when the 'S' key is pressed
-        if keys[pygame.K_s]:
-            self.move(dt)  # Pass positive dt for backward movement
+        # Handle movement
+        if keys[pygame.K_w]:  # Move forward
+            self.move(forward=True, dt=dt)
+        if keys[pygame.K_s]:  # Move backward
+            self.move(forward=False, dt=dt)
 
 
-    def move(self, dt):
+    def move(self, forward: bool, dt: float):
         """
-        Moves the player in the direction it is currently facing.
+        Moves the player in the current direction or opposite direction.
 
+        :param forward: True to move forward, False to move backward.
         :param dt: Delta time (time elapsed since the last frame, in seconds).
                 This ensures the movement speed is frame-rate independent.
         """
-        forward = pygame.Vector2(0, 1).rotate(self.rotation)  # Calculate forward direction based on rotation
-        self.position += forward * PLAYER_SPEED * dt  # Update position based on speed and delta time
+        # Determine the movement direction based on `forward`
+        direction = -1 if forward else 1
+        forward_vector = pygame.Vector2(0, 1).rotate(self.rotation)  # Calculate forward direction
+        self.position += direction * forward_vector * PLAYER_SPEED * dt  # Update position
