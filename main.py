@@ -4,47 +4,37 @@ from player import Player
 
 
 def main():
-    # --- Initialization ---
     pygame.init()
-    clock = pygame.time.Clock()  # Manage frame timing
-    dt = 0  # Delta time
-
-    # Set up the game window
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-    pygame.display.set_caption("Asteroids Game")
+    clock = pygame.time.Clock()
 
-    # Initialize the player at the center of the screen
-    x = SCREEN_WIDTH / 2
-    y = SCREEN_HEIGHT / 2
-    ast_player = Player(x, y)
+    updatable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
 
-    # --- Main Game Loop ---
-    running = True
-    while running:
-        # --- Event Handling ---
+    Player.containers = (updatable, drawable)
+
+    player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+
+    dt = 0
+
+    while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                running = False  # Exit the game loop
-                break
+                return
 
-        # --- Game Logic ---
-        ast_player.update(dt)  # Update the player's state
+        for obj in updatable:
+            obj.update(dt)
 
-        # --- Drawing ---
-        screen.fill((0, 0, 0))  # Clear the screen with black
-        ast_player.draw(screen)  # Draw the player
-        pygame.display.flip()  # Update the display
+        screen.fill("black")
 
-        # --- Frame Timing ---
-        dt = clock.tick(60) / 1000  # Frame time in seconds (for smooth updates)
+        for obj in drawable:
+            obj.draw(screen)
 
-        # Optional: Print frame rate for debugging
-        # print(f"FPS: {clock.get_fps():.2f}")
+        pygame.display.flip()
 
-    # --- Cleanup ---
-    pygame.quit()
+        # limit the framerate to 60 FPS
+        dt = clock.tick(60) / 1000
 
 
-# Start the game only if the script is run directly
 if __name__ == "__main__":
     main()
