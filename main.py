@@ -1,6 +1,8 @@
 import pygame
 from constants import *
 from player import Player
+from asteroid import Asteroid
+from asteroid_field import AsteroidField
 
 
 def main():
@@ -15,11 +17,18 @@ def main():
 
     # Sprite groups for game objects
     updatable = pygame.sprite.Group()  # Group of objects to update each frame
-    drawable = pygame.sprite.Group()  # Group of objects to draw each frame
+    drawable = pygame.sprite.Group()
+    asteroids = pygame.sprite.Group()
+
+    Asteroid.containers = (asteroids, updatable, drawable)
+    AsteroidField.containers = updatable
+    asteroid_field = AsteroidField()
 
     # Add the Player to the sprite groups
     Player.containers = (updatable, drawable)
+
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+    asteroidFielr = AsteroidField()
 
     dt = 0  # Delta time for frame-independent movement
 
@@ -48,3 +57,6 @@ def main():
 
     # Quit Pygame gracefully
     pygame.quit()
+
+if __name__ == "__main__":
+    main()
